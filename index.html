@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>शुभ निमंत्रण</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi&family=Hind:wght@400;600&display=swap">
+<style>
+:root{
+  --bg:#fff7e6; --ink:#2b1a12; --muted:#7a5a3c; --accent:#c2410c; --gold:#d99a00; --chip:#ffeccb; --chip-hi:#ffd36a; --line:#e8c98f;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){--bg:#1d1208;--ink:#fbe9c8;--muted:#c9a877;--accent:#ff9a4d;--gold:#f2b705;--chip:#2e1e10;--chip-hi:#7a5200;--line:#5a3f1c}
+}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Hind',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:760px;margin:0 auto;padding:40px 20px 56px}
+header{text-align:center;padding:28px 12px 32px;border-bottom:2px solid var(--gold)}
+.om{font-size:2.4rem;color:var(--gold);margin:0}
+h1{font-family:'Tiro Devanagari Hindi',serif;font-weight:400;font-size:clamp(2.2rem,8vw,3.6rem);line-height:1.2;margin:8px 0 12px;color:var(--accent)}
+.lead{max-width:34rem;margin:0 auto;color:var(--muted);font-size:1.1rem}
+.details{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:28px 0}
+.details div{border:1px solid var(--line);border-radius:10px;padding:14px 16px;text-align:center}
+.details b{display:block;font-family:'Tiro Devanagari Hindi',serif;font-weight:400;font-size:1.25rem;color:var(--accent)}
+.details span{color:var(--muted)}
+h2{font-family:'Tiro Devanagari Hindi',serif;font-weight:400;font-size:1.7rem;margin:36px 0 6px}
+.sub{margin:0 0 16px;color:var(--muted)}
+input{width:100%;font:inherit;padding:12px 14px;border-radius:10px;border:1px solid var(--line);background:var(--chip);color:var(--ink)}
+input:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+#list{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0;padding:0;list-style:none}
+#list li{background:var(--chip);border:1px solid var(--line);border-radius:999px;padding:6px 16px;font-size:1.05rem}
+#list li.hit{background:var(--chip-hi);border-color:var(--gold);font-weight:600}
+#list li.off{display:none}
+#msg{min-height:1.6em;color:var(--accent);font-weight:600}
+footer{text-align:center;margin-top:40px;padding-top:24px;border-top:2px solid var(--gold);color:var(--muted)}
+footer strong{display:block;font-family:'Tiro Devanagari Hindi',serif;font-weight:400;font-size:1.4rem;color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="om" aria-hidden="true">ॐ</p>
+    <h1>शुभ निमंत्रण</h1>
+    <p class="lead">हमारे परिवार के इस खुशी के मौके पर आप सभी सादर आमंत्रित हैं। आपकी उपस्थिति हमारे लिए सबसे बड़ा आशीर्वाद होगी।</p>
+  </header>
+
+  <section class="details" aria-label="कार्यक्रम की जानकारी">
+    <div><b>तारीख</b><span>00 माह 2026</span></div>
+    <div><b>समय</b><span>शाम 6:00 बजे</span></div>
+    <div><b>स्थान</b><span>यहाँ अपना पता लिखें</span></div>
+  </section>
+
+  <section>
+    <h2>आमंत्रित मेहमान</h2>
+    <p class="sub">अपना नाम खोजें और देखें कि आप सूची में हैं।</p>
+    <input id="q" type="search" placeholder="अपना नाम लिखें, जैसे Rohit" autocomplete="off" aria-label="नाम खोजें">
+    <p id="msg" role="status"></p>
+    <ul id="list"></ul>
+  </section>
+
+  <footer>
+    <strong>सपरिवार आपके स्वागत में</strong>
+    <span>यहाँ अपने परिवार का नाम लिखें</span>
+  </footer>
+</div>
+
+<script>
+var names=["Rohit","Mohit","Sohan","Ajay","Udai","Vijay","Rahul","Amit","Sanjay","Deepak","Manoj","Suresh","Ramesh","Mukesh","Dinesh","Naveen","Pawan","Kamal","Anil","Vikas","Rakesh","Sunil","Arjun","Karan","Nitin","Gaurav","Lokesh","Hemant","Yogesh","Mahesh","Prakash","Vishal","Ashok","Rajesh","Sachin","Tarun"];
+var list=document.getElementById("list"),q=document.getElementById("q"),msg=document.getElementById("msg");
+names.forEach(function(n){var li=document.createElement("li");li.textContent=n;list.appendChild(li)});
+q.addEventListener("input",function(){
+  var v=q.value.trim().toLowerCase(),found=0,items=list.children;
+  for(var i=0;i<items.length;i++){
+    var m=v&&items[i].textContent.toLowerCase().indexOf(v)>-1;
+    items[i].className=m?"hit":"";
+    if(m)found++;
+  }
+  msg.textContent=!v?"":found?"आपका नाम सूची में है। स्वागत है!":"यह नाम सूची में नहीं मिला।";
+});
+</script>
+</body>
+</html>
